@@ -22,3 +22,27 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
                 continue  # photos may be cached by the browser
             response.headers.setdefault(k, v)
         return response
+
+
+class VercelPathMiddleware:
+    """On Vercel every request is rewritten to /api/index. Restore the original path so FastAPI can route it,
+    whichever entry file Vercel decides to run (api/index.py or app/main.py). Harmless everywhere else."""
+
+    PREFIX = "/api/index"
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] in ("http", "websocket"):
+            path = scope.get("path", "/")
+            headers = {k.decode().lower(): v.decode() for k, v in scope.get("headers", [])}
+            original = headers.get("x-vercel-original-path") or headers.get("x-matched-path")
+            new = path
+            if original and original.startswith("/") and not original.startswith(self.PREFIX) and "[" not in original:
+                new = original.split("?")[0]
+            elif path == self.PREFIX or path.startswith(self.PREFIX + "/"):
+                new = path[len(self.PREFIX):] or "/"
+            if new != path:
+                scope = dict(scope, path=new, raw_path=new.encode())
+        await self.app(scope, receive, send)

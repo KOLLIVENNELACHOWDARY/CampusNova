@@ -10,7 +10,7 @@ from app.api import (admin_jobs, ai_review, auth, complaints, cron, dashboard, d
                      users, workflow)
 from app.core.config import settings
 from app.core.errors import install_error_handlers
-from app.core.middleware import SecurityHeadersMiddleware
+from app.core.middleware import SecurityHeadersMiddleware, VercelPathMiddleware
 
 logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"), format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
@@ -30,6 +30,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title=settings.app_name, version=settings.app_version, lifespan=lifespan,
               description="Campus complaint & maintenance management with AI priority, auto-assignment and SLA escalation.")
+app.add_middleware(VercelPathMiddleware)
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origin_list, allow_credentials=False,
                    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"], allow_headers=["Authorization", "Content-Type"])
