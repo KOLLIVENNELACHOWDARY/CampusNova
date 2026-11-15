@@ -2,7 +2,6 @@ tests
 docs
 team
 postman
-frontend
 ml/data
 ml/reports
 ml/random_split_check.py
