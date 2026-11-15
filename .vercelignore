@@ -1,0 +1,14 @@
+tests
+docs
+team
+postman
+frontend
+ml/data
+ml/reports
+ml/random_split_check.py
+*.md
+.github
+.env
+node_modules
+__pycache__
+*.db

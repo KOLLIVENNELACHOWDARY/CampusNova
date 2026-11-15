@@ -1,0 +1,2 @@
+# Optional: use OpenCV for photo decoding instead of Pillow (not needed; too large for a Vercel function)
+opencv-python-headless==5.0.0.93

@@ -1,0 +1,16 @@
+# Runs the scheduled jobs (SLA warnings/escalation, auto-assign sweep, notification dispatch) every 5 minutes.
+# Vercel Hobby only allows one cron run per day, so GitHub Actions provides the frequent schedule for free.
+# Repository secrets needed: API_URL (e.g. https://campusnova-api.vercel.app) and CRON_SECRET (same value as on Vercel).
+name: scheduled-jobs
+on:
+  schedule: [{ cron: "*/5 * * * *" }]
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call /cron/all
+        run: |
+          code=$(curl -sS -o out.json -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "${{ secrets.API_URL }}/cron/all")
+          cat out.json; echo
+          test "$code" = "200"

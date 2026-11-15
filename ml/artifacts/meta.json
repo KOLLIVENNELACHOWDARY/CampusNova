@@ -1,0 +1,8 @@
+{
+  "sklearn_version": "1.9.1",
+  "category_model": "tfidf_linearsvc_calibrated",
+  "min_confidence": 0.4,
+  "review_confidence": 0.6,
+  "safety_threshold": 0.35,
+  "trained_on_rows": 1257
+}

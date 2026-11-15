@@ -1,0 +1,1604 @@
+{
+ "info": {
+  "name": "CampusNova API",
+  "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+  "description": "Run folder 1 'Login as ...' first; the token is stored automatically. Demo password: Campus@123 (after `python -m app.db.seed --demo`)."
+ },
+ "item": [
+  {
+   "name": "1 Auth (Chethana)",
+   "item": [
+    {
+     "name": "Login as admin",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/auth/login",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "auth",
+        "login"
+       ]
+      },
+      "auth": {
+       "type": "noauth"
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"email\": \"admin@campusnova.edu\",\n  \"password\": \"Campus@123\"\n}"
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('200', ()=>pm.response.to.have.status(200));",
+         "const j=pm.response.json(); pm.collectionVariables.set('access_token', j.access_token); pm.collectionVariables.set('refresh_token', j.refresh_token);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Login as faculty",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/auth/login",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "auth",
+        "login"
+       ]
+      },
+      "auth": {
+       "type": "noauth"
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"email\": \"faculty.cse@campusnova.edu\",\n  \"password\": \"Campus@123\"\n}"
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('200', ()=>pm.response.to.have.status(200));",
+         "const j=pm.response.json(); pm.collectionVariables.set('access_token', j.access_token); pm.collectionVariables.set('refresh_token', j.refresh_token);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Login as electrician",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/auth/login",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "auth",
+        "login"
+       ]
+      },
+      "auth": {
+       "type": "noauth"
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"email\": \"electrician@campusnova.edu\",\n  \"password\": \"Campus@123\"\n}"
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('200', ()=>pm.response.to.have.status(200));",
+         "const j=pm.response.json(); pm.collectionVariables.set('access_token', j.access_token); pm.collectionVariables.set('refresh_token', j.refresh_token);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Me",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/auth/me",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "auth",
+        "me"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Refresh",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/auth/refresh",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "auth",
+        "refresh"
+       ]
+      },
+      "auth": {
+       "type": "noauth"
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}"
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "const j=pm.response.json(); pm.collectionVariables.set('access_token', j.access_token); pm.collectionVariables.set('refresh_token', j.refresh_token);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Logout",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/auth/logout",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "auth",
+        "logout"
+       ]
+      },
+      "auth": {
+       "type": "noauth"
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Change password",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/auth/change-password",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "auth",
+        "change-password"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"current_password\": \"Campus@123\",\n  \"new_password\": \"NewPass123\"\n}"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "2 Users (admin)",
+   "item": [
+    {
+     "name": "List users",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/users",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "users"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "List workers",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/users/workers",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "users",
+        "workers"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Create user",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/users",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "users"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"full_name\": \"New Worker\",\n  \"email\": \"new.worker@campusnova.edu\",\n  \"staff_id\": \"MNT100\",\n  \"role\": \"maintenance\",\n  \"department_id\": 6,\n  \"password\": \"Worker123\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Disable user",
+     "request": {
+      "method": "PATCH",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/users/7",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "users",
+        "7"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"is_active\": false\n}"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "3 Complaints (Jahnavi) - login as faculty first",
+   "item": [
+    {
+     "name": "Create complaint",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/complaints",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"block\": \"Block A\",\n  \"floor\": \"2\",\n  \"room_number\": \"A-204\",\n  \"description\": \"Sparks and a burning smell from the switch board near the door\"\n}"
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('201', ()=>pm.response.to.have.status(201));",
+         "pm.collectionVariables.set('complaint_id', pm.response.json().id);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "List (filters + pagination)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints?status=registered&category=electrical&q=fan&sort=newest&page=1&page_size=20",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints?status=registered&category=electrical&q=fan&sort=newest&page=1&page_size=20"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Detail",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Upload photo",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/images",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "images"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "formdata",
+       "formdata": [
+        {
+         "key": "file",
+         "type": "file",
+         "src": ""
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Events (audit trail)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/events",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "events"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "4 Workflow (Sadhvika)",
+   "item": [
+    {
+     "name": "Assign (admin)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/assign",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "assign"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"assignee_id\": 5\n}"
+      }
+     }
+    },
+    {
+     "name": "Open pool (worker)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints/pool",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "pool"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Claim (worker)",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/claim",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "claim"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Release (worker)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/release",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "release"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"reason\": \"On leave\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Start work",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/status",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "status"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"status\": \"in_progress\",\n  \"note\": \"\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Add remark",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/remarks",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "remarks"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"text\": \"Isolated the circuit\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Resolve",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/status",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "status"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"status\": \"resolved\",\n  \"note\": \"Replaced the switch board\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Sign off (reporter)",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/sign-off",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "sign-off"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Reopen (reporter)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/reopen",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "reopen"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"text\": \"Still broken\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Timeline",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints/{{complaint_id}}/timeline",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "{{complaint_id}}",
+        "timeline"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Routing rules",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/routing-rules",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "routing-rules"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Change routing rule (admin)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/routing-rules/electrical",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "routing-rules",
+        "electrical"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"department_id\": 8,\n  \"is_active\": true\n}"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "5 AI + dashboards (Vennela)",
+   "item": [
+    {
+     "name": "Dry-run rule engine",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/priority/evaluate",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "priority",
+        "evaluate"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"title\": \"Gas leak in chemistry lab\",\n  \"description\": \"Smell near fume hood\"\n}"
+      }
+     }
+    },
+    {
+     "name": "ML predict",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/priority/predict",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "priority",
+        "predict"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"title\": \"Exposed live wire near the door\",\n  \"description\": \"in the corridor\"\n}"
+      }
+     }
+    },
+    {
+     "name": "AI review queue",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/ai/reviews",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "ai",
+        "reviews"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Confirm prediction",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/ai/predictions/1/confirm",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "ai",
+        "predictions",
+        "1",
+        "confirm"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"notes\": \"ok\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Override prediction",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/ai/predictions/1/override",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "ai",
+        "predictions",
+        "1",
+        "override"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"category\": \"networking\",\n  \"priority\": \"high\",\n  \"notes\": \"wifi\"\n}"
+      }
+     }
+    },
+    {
+     "name": "Admin dashboard",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/dashboard/admin",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "dashboard",
+        "admin"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Emergencies",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/dashboard/emergencies",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "dashboard",
+        "emergencies"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Institution analytics",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/dashboard/institution?period_days=30",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "dashboard",
+        "institution?period_days=30"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "AI performance",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/dashboard/ai-performance",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "dashboard",
+        "ai-performance"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Notification stats",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/dashboard/notification-stats",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "dashboard",
+        "notification-stats"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Inbox",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/notifications",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "notifications"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Unread count",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/notifications/unread-count",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "notifications",
+        "unread-count"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Mark all read",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/notifications/read-all",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "notifications",
+        "read-all"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Run SLA check (+30h)",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/admin/jobs/sla-check?hours_ahead=30",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "admin",
+        "jobs",
+        "sla-check?hours_ahead=30"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Run dispatch",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/admin/jobs/dispatch",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "admin",
+        "jobs",
+        "dispatch"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Run auto-assign sweep",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/admin/jobs/auto-assign?minutes_ahead=30",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "admin",
+        "jobs",
+        "auto-assign?minutes_ahead=30"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "6 Errors (Nakshatra)",
+   "item": [
+    {
+     "name": "401 no token",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints"
+       ]
+      },
+      "auth": {
+       "type": "noauth"
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('401 + standard error', ()=>{pm.response.to.have.status(401); pm.expect(pm.response.json().error.code).to.eql('unauthorized');});"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "422 invalid body",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{base_url}}/complaints",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"block\": \"\"\n}"
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('422', ()=>pm.response.to.have.status(422));"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "404 unknown complaint",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/complaints/999999",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "complaints",
+        "999999"
+       ]
+      },
+      "auth": {
+       "type": "bearer",
+       "bearer": [
+        {
+         "key": "token",
+         "value": "{{access_token}}",
+         "type": "string"
+        }
+       ]
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('404', ()=>pm.response.to.have.status(404));"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Health",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/health",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "health"
+       ]
+      },
+      "auth": {
+       "type": "noauth"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "variable": [
+  {
+   "key": "base_url",
+   "value": "http://localhost:8000"
+  },
+  {
+   "key": "access_token",
+   "value": ""
+  },
+  {
+   "key": "refresh_token",
+   "value": ""
+  },
+  {
+   "key": "complaint_id",
+   "value": "1"
+  }
+ ]
+}

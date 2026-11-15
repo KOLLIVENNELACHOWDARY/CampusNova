@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Testing and tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors and OS
+.DS_Store
+.vscode/
+.idea/
+migration_preview.sql
+
+team/
+.env
+.env.*
+!.env.example
+.venv/
+node_modules/
+frontend/dist/
+*.db
+__pycache__/
+*.pyc
+.pytest_cache/
+*.json.key
+
+team/
+.env
+.env.*
+!.env.example
+.venv/
+node_modules/
+frontend/dist/
+*.db
+__pycache__/
+*.pyc
+.pytest_cache/
+
+key.json
+*-firebase-adminsdk-*.json
